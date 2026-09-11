@@ -60,9 +60,28 @@ services:
     networks:
       - backend-network
 
+  object-storage:
+    image: chrislusf/seaweedfs:${OBJECT_STORAGE_VERSION}
+    container_name: waystone-object-storage
+    command:
+      - mini
+      - -dir=/data
+    environment:
+      AWS_ACCESS_KEY_ID: ${OBJECT_STORAGE_ACCESS_KEY}
+      AWS_SECRET_ACCESS_KEY: ${OBJECT_STORAGE_SECRET_KEY}
+      S3_BUCKET: ${OBJECT_STORAGE_BUCKET}
+    ports:
+      - "${OBJECT_STORAGE_PORT}:8333"
+    volumes:
+      - object_storage_data:/data
+    networks:
+      - backend-network
+
 volumes:
   postgres_data:
     name: waystone-postgres-data
+  object_storage_data:
+    name: waystone-object-storage-data
 
 networks:
   backend-network:
