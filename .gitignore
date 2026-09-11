@@ -1,0 +1,17 @@
+# Environment
+.env
+.env.*
+!.env.example
+
+# IDE
+.idea/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated files
+generated/
