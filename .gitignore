@@ -1,7 +1,7 @@
 # Environment
 .env
 .env.*
-!.env.example
+!.env.template
 
 # IDE
 .idea/

@@ -1,0 +1,45 @@
+name: waystone-platform-dev
+
+services:
+  postgres:
+    image: postgres:18-alpine
+    container_name: waystone-postgres
+    restart: no
+    environment:
+      POSTGRES_USER: ${DB_ADMIN_USER}
+      POSTGRES_PASSWORD: ${DB_ADMIN_PASSWORD}
+      POSTGRES_DB: ${DB_DEFAULT_NAME}
+      RPG_DB_NAME: ${RPG_DB_NAME}
+      RPG_DB_USER: ${RPG_DB_USER}
+      RPG_DB_PASSWORD: ${RPG_DB_PASSWORD}
+      RPG_TEST_DB_NAME: ${RPG_TEST_DB_NAME}
+      RPG_TEST_DB_USER: ${RPG_TEST_DB_USER}
+      RPG_TEST_DB_PASSWORD: ${RPG_TEST_DB_PASSWORD}
+      KC_DB_NAME: ${KC_DB_NAME}
+      KC_DB_USER: ${KC_DB_USER}
+      KC_DB_PASSWORD: ${KC_DB_PASSWORD}
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+      - ../services/db/init-db.sh:/docker-entrypoint-initdb.d/01-init-db.sh:ro
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${DB_ADMIN_USER} -d ${DB_DEFAULT_NAME}"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - backend-network
+
+volumes:
+  postgres_data:
+    name: waystone-postgres-data
+
+networks:
+  backend-network:
+    name: waystone-backend-network
+    driver: bridge
