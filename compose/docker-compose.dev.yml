@@ -18,6 +18,7 @@ services:
       KC_DB_NAME: ${KC_DB_NAME}
       KC_DB_USER: ${KC_DB_USER}
       KC_DB_PASSWORD: ${KC_DB_PASSWORD}
+      SERVICE_SHADOW_DB_NAME: ${SERVICE_SHADOW_DB_NAME}
     ports:
       - "${DB_PORT}:5432"
     volumes:

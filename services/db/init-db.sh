@@ -63,5 +63,9 @@ create_user_and_database \
   "$KC_DB_USER" \
   "$KC_DB_PASSWORD"
 
+create_user_and_database \
+  "$SERVICE_SHADOW_DB_NAME" \
+  "$SERVICE_DB_USER" \
+  "$SERVICE_DB_PASSWORD"
 
 echo "Service databases initialized successfully."
