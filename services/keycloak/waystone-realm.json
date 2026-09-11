@@ -2,17 +2,46 @@
   "realm": "waystone",
   "displayName": "Waystone",
   "enabled": true,
-
   "registrationAllowed": false,
   "resetPasswordAllowed": true,
   "rememberMe": true,
-
   "groups": [
     {
       "name": "platform-users"
     },
     {
       "name": "platform-admins"
+    }
+  ],
+
+  "clients": [
+    {
+      "clientId": "${WAYSTONE_BACKEND_CLIENT_ID}",
+      "name": "Waystone Backend",
+      "description": "Technical client used by the Waystone backend",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "clientAuthenticatorType": "client-secret",
+      "secret": "${WAYSTONE_BACKEND_CLIENT_SECRET}",
+      "publicClient": false,
+      "bearerOnly": false,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": true,
+      "fullScopeAllowed": true
+    }
+  ],
+  "users": [
+    {
+      "username": "service-account-${WAYSTONE_BACKEND_CLIENT_ID}",
+      "enabled": true,
+      "serviceAccountClientId": "${WAYSTONE_BACKEND_CLIENT_ID}",
+      "clientRoles": {
+        "realm-management": [
+          "manage-users"
+        ]
+      }
     }
   ]
 }
