@@ -9,12 +9,12 @@ services:
       POSTGRES_USER: ${DB_ADMIN_USER}
       POSTGRES_PASSWORD: ${DB_ADMIN_PASSWORD}
       POSTGRES_DB: ${DB_DEFAULT_NAME}
-      RPG_DB_NAME: ${RPG_DB_NAME}
-      RPG_DB_USER: ${RPG_DB_USER}
-      RPG_DB_PASSWORD: ${RPG_DB_PASSWORD}
-      RPG_TEST_DB_NAME: ${RPG_TEST_DB_NAME}
-      RPG_TEST_DB_USER: ${RPG_TEST_DB_USER}
-      RPG_TEST_DB_PASSWORD: ${RPG_TEST_DB_PASSWORD}
+      SERVICE_DB_NAME: ${SERVICE_DB_NAME}
+      SERVICE_DB_USER: ${SERVICE_DB_USER}
+      SERVICE_DB_PASSWORD: ${SERVICE_DB_PASSWORD}
+      SERVICE_TEST_DB_NAME: ${SERVICE_TEST_DB_NAME}
+      SERVICE_TEST_DB_USER: ${SERVICE_TEST_DB_USER}
+      SERVICE_TEST_DB_PASSWORD: ${SERVICE_TEST_DB_PASSWORD}
       KC_DB_NAME: ${KC_DB_NAME}
       KC_DB_USER: ${KC_DB_USER}
       KC_DB_PASSWORD: ${KC_DB_PASSWORD}
@@ -32,6 +32,31 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+    networks:
+      - backend-network
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:${KC_VERSION}
+    container_name: waystone-keycloak
+    command:
+      - start-dev
+      - --import-realm
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/${KC_DB_NAME}
+      KC_DB_USERNAME: ${KC_DB_USER}
+      KC_DB_PASSWORD: ${KC_DB_PASSWORD}
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KC_BOOTSTRAP_ADMIN_USERNAME}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_BOOTSTRAP_ADMIN_PASSWORD}
+      KC_HOSTNAME_STRICT: ${KC_HOSTNAME_STRICT}
+      KC_HTTP_ENABLED: ${KC_HTTP_ENABLED}
+    ports:
+      - "${KC_PORT}:8080"
+    volumes:
+      - ../services/keycloak/waystone-realm.json:/opt/keycloak/data/import/waystone-realm.json:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
     networks:
       - backend-network
 

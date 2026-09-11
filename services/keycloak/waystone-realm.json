@@ -1,0 +1,18 @@
+{
+  "realm": "waystone",
+  "displayName": "Waystone",
+  "enabled": true,
+
+  "registrationAllowed": false,
+  "resetPasswordAllowed": true,
+  "rememberMe": true,
+
+  "groups": [
+    {
+      "name": "platform-users"
+    },
+    {
+      "name": "platform-admins"
+    }
+  ]
+}

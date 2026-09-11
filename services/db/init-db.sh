@@ -2,7 +2,7 @@
 
 set -e
 
-echo "Initializing RPG Platform databases..."
+echo "Initializing Service databases..."
 
 create_user_and_database() {
   local database_name="$1"
@@ -47,15 +47,15 @@ EOSQL
 
 
 create_user_and_database \
-  "$RPG_DB_NAME" \
-  "$RPG_DB_USER" \
-  "$RPG_DB_PASSWORD"
+  "$SERVICE_DB_NAME" \
+  "$SERVICE_DB_USER" \
+  "$SERVICE_DB_PASSWORD"
 
 
 create_user_and_database \
-  "$RPG_TEST_DB_NAME" \
-  "$RPG_TEST_DB_USER" \
-  "$RPG_TEST_DB_PASSWORD"
+  "$SERVICE_TEST_DB_NAME" \
+  "$SERVICE_TEST_DB_USER" \
+  "$SERVICE_TEST_DB_PASSWORD"
 
 
 create_user_and_database \
@@ -64,4 +64,4 @@ create_user_and_database \
   "$KC_DB_PASSWORD"
 
 
-echo "RPG Platform databases initialized successfully."
+echo "Service databases initialized successfully."
